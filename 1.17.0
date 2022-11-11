@@ -1,0 +1,4 @@
+Collecting numpy
+  Using cached numpy-1.23.4-cp310-cp310-win_amd64.whl (14.6 MB)
+Installing collected packages: numpy
+Successfully installed numpy-1.23.4
