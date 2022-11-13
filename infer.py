@@ -67,12 +67,24 @@ def img2text(model, images, converter):
     with torch.no_grad():
         for img in images:
             pred = model(img, seqlen=converter.batch_max_length)
+            print(pred.shape)#torch.Size([1, 27, 96])
+            print(pred)
             _, pred_index = pred.topk(1, dim=-1, largest=True, sorted=True)
-            pred_index = pred_index.view(-1, converter.batch_max_length)
+            print(pred_index.shape)#torch.Size([1, 27, 1])
+            print(pred_index)
+            pred_index = pred_index.view(-1, converter.batch_max_length)# view(-1, converter.batch_max_length) : [b, 25] -> [b, 25]
+            print(pred_index.shape)#torch.Size([1, 27])
+            print(pred_index)
             length_for_pred = torch.IntTensor([converter.batch_max_length - 1] )
+            print(length_for_pred.shape)#torch.Size([1])
+            print(length_for_pred)
+            print(pred_index[:,1:])
+            print(pred_index[:,1:].shape)#torch.Size([1, 26])
             pred_str = converter.decode(pred_index[:, 1:], length_for_pred)
-            pred_EOS = pred_str[0].find('[s]')
+            print(pred_str)
+            pred_EOS = pred_str[0].find('[s]')# find : return index
             pred_str = pred_str[0][:pred_EOS]
+            print(pred_str)
 
             pred_strs.append(pred_str)
 
@@ -142,7 +154,7 @@ def infer(args):
 
 if __name__ == '__main__':
     args = get_args()
-    args.character = string.printable[:-6] 
+    args.character = string.printable[:-6] # string.printable[:-6] # removes whitespace from string.printable
     data = infer(args)
     for filename, text in data:
         print(filename, "\t: ", text)
