@@ -92,8 +92,10 @@ def img2text(model, images, converter):
 
 def infer(args):
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    print('Using device:', device)
     converter = TokenLabelConverter(args)
     args.num_class = len(converter.character)
+    print('Number of classes:', args.num_class)
     extractor = ViTSTRFeatureExtractor()
     if args.time:
         files = ["demo_1.png", "demo_2.jpg", "demo_3.png",  "demo_4.png",  "demo_5.png",  "demo_6.png",  "demo_7.png",  "demo_8.jpg", "demo_9.jpg", "demo_10.jpg"]
@@ -155,6 +157,7 @@ def infer(args):
 if __name__ == '__main__':
     args = get_args()
     args.character = string.printable[:-6] # string.printable[:-6] # removes whitespace from string.printable
+    print(args.character)
     data = infer(args)
     for filename, text in data:
         print(filename, "\t: ", text)
