@@ -45,6 +45,7 @@ class Model(nn.Module):
 
         if opt.Transformer:
             self.vitstr= create_vitstr(num_tokens=opt.num_class, model=opt.TransformerModel)
+            print('ViTSTR model created')
             return
 
         """ FeatureExtraction """
