@@ -65,10 +65,14 @@ class ViTSTR(VisionTransformer):
         cls_tokens = self.cls_token.expand(B, -1, -1)  # stole cls_tokens impl from Phil Wang, thanks
         x = torch.cat((cls_tokens, x), dim=1)
         x = x + self.pos_embed
+        print('pos_embed',self.pos_embed.shape)
+        print('pos_embed',self.pos_embed)
         x = self.pos_drop(x)
+        # print(x.shape)
 
         for blk in self.blocks:
             x = blk(x)
+            # print(x.shape)
 
         x = self.norm(x)
         return x
@@ -81,6 +85,7 @@ class ViTSTR(VisionTransformer):
         b, s, e = x.size()
         x = x.reshape(b*s, e)
         x = self.head(x).view(b, s, self.num_classes)
+        print('-------',x.shape)
         return x
 
 
@@ -226,3 +231,15 @@ def vitstr_small_distilled_patch16_224(pretrained=False, **kwargs):
         load_pretrained(
             model, num_classes=model.num_classes, in_chans=kwargs.get('in_chans', 1), filter_fn=_conv_filter)
     return model
+
+
+if __name__ == '__main__':
+    import torch
+    model = vitstr_tiny_patch16_224(pretrained=True)
+    # print(model)
+    # demo_1 가져오기
+    
+    
+    x = torch.rand(1, 1, 224, 224)
+    y = model(x)
+    # print(y.shape)
