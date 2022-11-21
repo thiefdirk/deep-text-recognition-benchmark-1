@@ -68,7 +68,7 @@ def benchmark_all_eval(model, criterion, converter, opt): #, calculate_infer_tim
         evaluation_loader = torch.utils.data.DataLoader(
             eval_data, batch_size=evaluation_batch_size,
             shuffle=False,
-            num_workers=int(opt.workers),
+            num_workers=int(0),
             collate_fn=AlignCollate_evaluation, pin_memory=True)
 
         _, accuracy_by_best_model, norm_ED_by_best_model, _, _, _, infer_time, length_of_data = validation(
@@ -317,7 +317,7 @@ def test(opt):
             evaluation_loader = torch.utils.data.DataLoader(
                 eval_data, batch_size=opt.batch_size,
                 shuffle=False,
-                num_workers=int(opt.workers),
+                num_workers=int(0),
                 collate_fn=AlignCollate_evaluation, pin_memory=True)
             _, accuracy_by_best_model, _, _, _, _, _, _ = validation(
                 model, criterion, evaluation_loader, converter, opt)

@@ -23,9 +23,9 @@ from torch.optim.lr_scheduler import CosineAnnealingLR, StepLR, MultiStepLR, Red
 
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+print(device)
 
-# python3 train.py --train_data data_lmdb_release/training --valid_data data_lmdb_release/validation --select_data MJ-ST --batch_ratio 0.5-0.5 --Transformation None --FeatureExtraction None --SequenceModeling None --Prediction None --Transformer --imgH 224 --imgW 224
-
+# python train.py --train_data D:\study_data\_data\deep-text-recognition-benchmark\data_lmdb\train --valid_data D:\study_data\_data\deep-text-recognition-benchmark\data_lmdb\validation --Transformation None --FeatureExtraction None --SequenceModeling None --Prediction None --data_filtering_off --Transformer
 def train(opt):
     """ dataset preparation """
     if not opt.data_filtering_off:
@@ -94,6 +94,7 @@ def train(opt):
         print(f'loading pretrained model from {opt.saved_model}')
         if opt.FT:
             # model.load_state_dict(torch.load(opt.saved_model), strict=False)
+            print('Finetune from pretrained model')
             checkpoint = torch.load(opt.saved_model)
 
             checkpoint = {k: v for k, v in checkpoint.items() 
@@ -102,6 +103,7 @@ def train(opt):
                 if name in checkpoint.keys() : 
                     model.state_dict()[name].copy_(checkpoint[name]) 
         else:
+            print('not finetune')
             model.load_state_dict(torch.load(opt.saved_model))
     #print("Model:")
     #print(model)
