@@ -96,6 +96,7 @@ def get_args():
     # For Raspberry Pi 4
     parser.add_argument('--quantized', action='store_true', help='Model quantization')
     parser.add_argument('--rpi', action='store_true', help='run on rpi 4')
+    parser.add_argument('--text', type=str, default=None, help='run on rpi 4')
 
     args = parser.parse_args()
     return args
