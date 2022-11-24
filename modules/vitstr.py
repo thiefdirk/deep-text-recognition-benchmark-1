@@ -65,8 +65,8 @@ class ViTSTR(VisionTransformer):
         cls_tokens = self.cls_token.expand(B, -1, -1)  # stole cls_tokens impl from Phil Wang, thanks
         x = torch.cat((cls_tokens, x), dim=1)
         x = x + self.pos_embed
-        print('pos_embed',self.pos_embed.shape)
-        print('pos_embed',self.pos_embed)
+        # print('pos_embed',self.pos_embed.shape)
+        # print('pos_embed',self.pos_embed)
         x = self.pos_drop(x)
         # print(x.shape)
 
@@ -85,7 +85,7 @@ class ViTSTR(VisionTransformer):
         b, s, e = x.size()
         x = x.reshape(b*s, e)
         x = self.head(x).view(b, s, self.num_classes)
-        print('-------',x.shape)
+        # print('-------',x.shape)
         return x
 
 
@@ -100,7 +100,7 @@ def load_pretrained(model, cfg=None, num_classes=1000, in_chans=1, filter_fn=Non
         _logger.warning("Pretrained model URL is invalid, using random initialization.")
         return
 
-    state_dict = model_zoo.load_url(cfg['url'], progress=True, map_location='cpu')
+    state_dict = model_zoo.load_url(cfg['url'], progress=True, map_location='cuda')
     if "model" in state_dict.keys():
         state_dict = state_dict["model"]
 

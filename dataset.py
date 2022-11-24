@@ -96,7 +96,7 @@ class Batch_Balanced_Dataset(object):
 
         for i, data_loader_iter in enumerate(self.dataloader_iter_list):
             try:
-                image, text = next(data_loader_iter) #.next() # .next() is deprecated in pytorch 1.2
+                image, text = next(data_loader_iter) # .next() is deprecated in pytorch 1.2
                 balanced_batch_images.append(image)
                 balanced_batch_texts += text
             except StopIteration:
