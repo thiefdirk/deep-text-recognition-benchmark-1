@@ -176,4 +176,4 @@ if __name__ == '__main__':
     for filename, text in data:
         print(filename, "\t: ", text)
 
-    #print(infer(args))
+    #print(infer(args))###
