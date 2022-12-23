@@ -85,7 +85,6 @@ class ViTSTR(VisionTransformer):
         b, s, e = x.size()
         x = x.reshape(b*s, e)
         x = self.head(x).view(b, s, self.num_classes)
-        # print('-------',x.shape)
         return x
 
 

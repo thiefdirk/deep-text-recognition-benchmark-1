@@ -93,8 +93,8 @@ def train(opt):
     if opt.saved_model != '':
         print(f'loading pretrained model from {opt.saved_model}')
         if opt.FT:
-            model.load_state_dict(torch.load(opt.saved_model), strict=False)
             print('Finetune from pretrained model')
+            model.load_state_dict(torch.load(opt.saved_model), strict=False)
         else:
             print('not finetune')
             model.load_state_dict(torch.load(opt.saved_model))
